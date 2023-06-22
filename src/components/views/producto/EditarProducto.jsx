@@ -1,15 +1,30 @@
+import { useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
+import { obtenerUnProducto } from "../../helpers/queries";
 const EditarProducto = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    setValue
   } = useForm();
+  const { id } = useParams();
+  useEffect(() => {
+    obtenerUnProducto(id).then((respuesta) => {
+      console.log(respuesta);
+      setValue("nombreProducto", respuesta.nombreProducto);
+      setValue("precio", respuesta.precio);
+      setValue("imagen", respuesta.imagen);
+      setValue("categoria", respuesta.categoria);
+    })
+  }, []);
 
   const onSubmit = (productoNuevo) => {
     console.log(productoNuevo);
+    //llamar a la peticion para editar un producto
   };
 
   return (
