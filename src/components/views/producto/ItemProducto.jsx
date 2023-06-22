@@ -1,8 +1,33 @@
 import { Button } from "react-bootstrap";
+import { borrarProducto, obtenerProductos } from "../../helpers/queries";
+import Swal from "sweetalert2";
 
-
-const ItemProducto = ({producto}) => {
-   return (
+const ItemProducto = ({ producto, setProductos }) => {
+  const eliminarProducto = () => {
+    //todo: agregar la consulta de sweetalert para preguntar si está seguro de que quiere borrar
+    borrarProducto(producto.id).then((respuesta) => {
+      if (respuesta && respuesta.status === 200) {
+        Swal.fire(
+          "Producto eliminado",
+          `El producto ${producto.nombreProducto} fue eliminado correctamente`,
+          "success"
+        );
+        //recargar la tabla
+        obtenerProductos().then((respuesta) => {
+         if (respuesta) {
+           setProductos(respuesta);
+         } 
+        });
+      } else {
+        Swal.fire(
+          "Ocurrió un error",
+          `El producto ${producto.nombreProducto} no pudo ser eliminado`,
+          "error"
+        );
+      }
+    });
+  };
+  return (
     <tr>
       <td>{producto.id}</td>
       <td>{producto.nombreProducto}</td>
@@ -11,7 +36,7 @@ const ItemProducto = ({producto}) => {
       <td>{producto.categoria}</td>
       <td>
         <Button className="btn btn-warning">Editar</Button>
-        <Button variant="danger">
+        <Button variant="danger" onClick={eliminarProducto}>
           Borrar
         </Button>
       </td>
