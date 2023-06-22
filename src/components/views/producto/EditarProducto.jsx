@@ -3,6 +3,9 @@ import { Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { obtenerUnProducto } from "../../helpers/queries";
+import Swal from "sweetalert2";
+import { editarProducto } from "../../helpers/queries";
+
 const EditarProducto = () => {
   const {
     register,
@@ -25,7 +28,7 @@ const EditarProducto = () => {
   const onSubmit = (productoNuevo) => {
     console.log(productoNuevo);
     //llamar a la peticion para editar un producto
-  };
+ }
 
   return (
     <section className="container mainSection">
