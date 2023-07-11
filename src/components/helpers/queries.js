@@ -7,7 +7,7 @@ POST permiten agregar elementos.
 PUT / PATCH permiten modificar elementos.
 DELETE  permiten eliminar un elementos.
 */ 
-export const login = async (usuario)=>{
+/* export const login = async (usuario)=>{
     try{
         //pedir a la api la lista de usuarios
         const respuesta = await fetch(URL_usuario);
@@ -27,6 +27,22 @@ export const login = async (usuario)=>{
             console.log('el mail no existe')
             return null
         }
+    }catch(error){
+        console.log(error)
+    }
+} */
+export const login = async (usuario)=>{
+    try{
+        //pedir a la api la lista de usuarios
+        const respuesta = await fetch(URL_usuario,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(usuario)
+        });
+        const usuarioLogueado = await respuesta.json();
+        return usuarioLogueado;
     }catch(error){
         console.log(error)
     }
